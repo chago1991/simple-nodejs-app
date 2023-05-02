@@ -16,7 +16,7 @@ jobs:
     - name: Deploy to server
       run: |
         ssh upload@10.10.73.230 "if [ ! -d "app" ]; then mkdir "app"; fi"
-        rsync -avz --delete --exclude '.git*' --exclude 'node_modules' ./ upload@10.10.73.230:/home/app
+        rsync -avz --delete --exclude '.git*' --exclude 'node_modules' ./ upload@10.10.73.230:/home/upload/app
         ssh user@10.10.73.230 "cd app && npm install --production && pm2 start index.js"
 #      env:
 #        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
