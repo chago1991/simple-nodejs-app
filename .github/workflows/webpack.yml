@@ -20,7 +20,6 @@ jobs:
 
     - name: Install dependencies and build
       run: |
-        npm ci
         npm run build
 
     #- name: Copy files to the remote server
