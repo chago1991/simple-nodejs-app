@@ -1,28 +1,42 @@
-name: NodeJS with Webpack
+name: Build and Deploy
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: self-hosted
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 18
 
-    - name: Build
+    - name: Install dependencies and build
       run: |
-        npm install
-        npm start
+        npm ci
+        npm run build
+
+    #- name: Copy files to the remote server
+    #  uses: appleboy/scp-action@master
+    #  with:
+    #    host: 10.10.73.230
+    #    username: upload
+    #    source: "your/local/folder"
+    #    target: "your/remote/folder"
+
+    #- name: Start the application on the remote server
+    #  uses: appleboy/ssh-action@master
+    #  with:
+    #    host: 10.10.73.230
+    #    username: your-username
+    #    password: your-password
+    #    script: |
+    #      cd your/remote/folder
+    #      npm start
