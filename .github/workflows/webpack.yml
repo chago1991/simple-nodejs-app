@@ -24,4 +24,5 @@ jobs:
 
     - name: Build
       run: |
-        ssh upload@10.10.73.230 "if [ ! -d "app" ]; then mkdir "app" fi && cd app"
+        npm install
+        npm start
